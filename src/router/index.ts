@@ -1,5 +1,7 @@
+import { notAuthenticatedGuard } from '@/modules/auth/guards/not-authenticated.guard';
 import { authRoutes } from '@/modules/auth/routes/auth.routes';
 import UsersLayout from '@/modules/users/layouts/UsersLayout.vue';
+import { AuthStore } from '@/stores';
 import { createRouter, createWebHistory } from 'vue-router';
 
 const router = createRouter({
@@ -8,12 +10,18 @@ const router = createRouter({
         {
             path: '/',
             name: 'users',
+            beforeEnter: notAuthenticatedGuard,
             component: UsersLayout,
         },
 
         // Auth Routes
         authRoutes,
     ],
+});
+
+router.afterEach(() => {
+    const authStore = AuthStore();
+    authStore.errorMessage = undefined;
 });
 
 export default router;
