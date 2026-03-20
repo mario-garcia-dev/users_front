@@ -9,9 +9,17 @@ const router = createRouter({
     routes: [
         {
             path: '/',
-            name: 'users',
+            name: 'home',
+            redirect: { name: 'users' },
             beforeEnter: notAuthenticatedGuard,
             component: UsersLayout,
+            children: [
+                {
+                    path: 'users',
+                    name: 'users',
+                    component: () => import('@/modules/users/pages/UsersPage.vue'),
+                },
+            ],
         },
 
         // Auth Routes

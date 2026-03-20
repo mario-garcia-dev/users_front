@@ -4,13 +4,15 @@ import { v4 as uuidv4 } from 'uuid';
 
 export const registerAction = async (user: User): Promise<boolean> => {
     try {
-        const { username, email, fullname, password } = user;
+        const { username, email, name, password, isActive, roles } = user;
         await localApi.post('/users', {
             id: uuidv4(),
             username,
             email,
-            name: fullname,
+            name,
             password,
+            isActive,
+            roles,
         });
 
         return true;

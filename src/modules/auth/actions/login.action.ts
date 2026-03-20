@@ -1,17 +1,23 @@
 import localApi from '@/api/localApi';
+import type { LoginError, LoginSuccess } from '../interfaces/login-response.interface';
 
-export const loginAction = async (username: string, password: string): Promise<boolean> => {
+export const loginAction = async (
+    username: string,
+    password: string,
+): Promise<LoginSuccess | LoginError> => {
     try {
-        if (!username || !password) return false;
+        if (!username || !password) return { ok: false, error: 'username or password not valid' };
 
-        await localApi.post('/auth/login', {
+        const { data } = await localApi.post<LoginSuccess>('/auth/login', {
             username,
             password,
         });
 
-        return true;
+        return {
+            ok: true,
+            user: data.user,
+        };
     } catch (error) {
-        console.error(error);
-        return false;
+        return { ok: false, error: 'user not found' };
     }
 };

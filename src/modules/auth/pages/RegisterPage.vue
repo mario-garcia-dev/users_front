@@ -15,7 +15,7 @@
         />
         <label class="block mt-3 font-semibold">Full name</label>
         <input
-            v-model="registerForm.fullname"
+            v-model="registerForm.name"
             type="text"
             class="border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md"
         />
@@ -58,7 +58,7 @@ const authStore = AuthStore();
 const registerForm = reactive({
     username: '',
     email: '',
-    fullname: '',
+    name: '',
     password: '',
 });
 
@@ -66,8 +66,10 @@ const onRegister = async () => {
     const ok = await authStore.registerUser({
         username: registerForm.username,
         email: registerForm.email,
-        fullname: registerForm.fullname,
+        name: registerForm.name,
         password: registerForm.password,
+        isActive: true,
+        roles: ['common'],
     });
 
     if (!ok) return;

@@ -51,6 +51,6 @@ const onLogin = async () => {
 
     if (!ok) return;
 
-    router.replace({ name: 'users' });
+    router.replace({ name: 'home' });
 };
 </script>
